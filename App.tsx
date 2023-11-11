@@ -51,27 +51,52 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = () => {
-  const [count, setCount] = useState(0);
-  return (
-    <View style={styles.body}>
-      <Text style={styles.heading}>Counter App</Text>
-      <Text style={styles.plainText}>{count}</Text>
-      <View style={styles.container}>
-        <Pressable
-          style={styles.button}
-          onPress={() => setCount(count === 0 ? count : count - 1)}>
-          <Text style={styles.textButton}>-</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={() => setCount(0)}>
-          <Text style={styles.textButton}>reset !</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={() => setCount(count + 1)}>
-          <Text style={styles.textButton}>+</Text>
-        </Pressable>
+interface State {
+  count: number;
+}
+
+interface Props {}
+class App extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      count: 0,
+    };
+  }
+
+  setCount = (newCount: number) => {
+    this.setState({count: newCount});
+  };
+
+  render(): React.ReactNode {
+    return (
+      <View style={styles.body}>
+        <Text style={styles.heading}>Counter App</Text>
+        <Text style={styles.plainText}>{this.state.count}</Text>
+        <View style={styles.container}>
+          <Pressable
+            style={styles.button}
+            onPress={() =>
+              this.setCount(
+                this.state.count === 0
+                  ? this.state.count
+                  : this.state.count - 1,
+              )
+            }>
+            <Text style={styles.textButton}>-</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={() => this.setCount(0)}>
+            <Text style={styles.textButton}>reset !</Text>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => this.setCount(this.state.count + 1)}>
+            <Text style={styles.textButton}>+</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 export default App;
